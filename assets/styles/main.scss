@@ -1,0 +1,18 @@
+@use "./fonts";
+
+$prescript-machine-text: deepskyblue;
+
+.prescript-machine{
+    background-color: black;
+    color: $prescript-machine-text;
+    font-family: "Liberation Mono";
+
+    li{
+        padding: 2px;
+    }
+}
+
+.id-output-row{
+    min-height: 20px;
+    padding: 5px;
+}

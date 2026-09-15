@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/styles/main.css">
+    </head>
+    <body>
+        <p id="text-animation-test-1" class="prescript-machine id-output-row"></p>
+        <p id="text-animation-test-2" class="prescript-machine id-output-row"></p>
+        <input type="file" id="spreadsheet-upload"/>
+        <button type="button" id="print-master-list">Print Random ID</button>
+        <div class="prescript-machine">
+            <ul id="master-list-test-output"></ul>
+        </div>
+
+        <script src="\lib\papaparse.js"></script>
+        <script type="module" src="\lib\random.js"></script>
+        
+        <script type="module" src="\src\id_definitions\sinner_id.js"></script>
+        <script type="module" src="\src\id_definitions\sinners.js"></script>
+
+        <script type="module" src="\src\randomiser\id_list.js"></script>
+        <script type="module" src="\src\randomiser\spreadsheet_to_sinner_list.js"></script>
+        <script type="module" src="\src\animations\text_print.js"></script>
+
+        <script type="module" src="\src\main.js"></script>
+    </body>
+</html>
