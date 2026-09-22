@@ -1,18 +1,19 @@
 @use "./fonts";
+@use "./prescript_machine";
+@use "./options_menu";
+@use "./palette";
 
-$prescript-machine-text: deepskyblue;
-
-.prescript-machine{
-    background-color: black;
-    color: $prescript-machine-text;
-    font-family: "Liberation Mono";
-
-    li{
-        padding: 2px;
-    }
+body{
+    background-color: palette.$bg-colour;
+    color: palette.$text-colour;
+    font-family: fonts.$lib-sans;
+    margin-top: 4px;
+    width: 100%;
 }
 
-.id-output-row{
-    min-height: 20px;
-    padding: 5px;
+h1, h2{
+    font-family: fonts.$mikodacs;
+    letter-spacing: 1px;
+    padding: 8px 12px 0px;
+    margin-top: 8px;   
 }

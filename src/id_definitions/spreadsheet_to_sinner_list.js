@@ -1,6 +1,7 @@
 import { idMasterList } from './id_list.js';
-import { SinnerId } from '../id_definitions/sinner_id.js';
-import { Sinners } from '../id_definitions/sinners.js';
+import { SinnerId } from './sinner_id.js';
+import { Sinners } from './sinners.js';
+import { splitCommaSeperatedValue } from '../main.js';
 
 const fileUpload = document.getElementById("spreadsheet-upload");
 fileUpload.addEventListener("change", convertToIdList)
@@ -8,6 +9,10 @@ fileUpload.addEventListener("change", convertToIdList)
 async function convertToIdList(){
     const file = this.files[0];
     console.log(`${file.name} uploaded`);
+    loadFile(file);
+}
+
+export async function loadFile(file){
     if(file.type !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
         window.alert("Not a valid excel spreadsheet");
         return;
@@ -15,24 +20,25 @@ async function convertToIdList(){
 
     const XLSX = await import("https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs");
     const reader = new FileReader();
-        reader.onload = (e) => {
-        const arrayBuffer = e.target.result;
-        const workbook = XLSX.read(arrayBuffer);
-        const sheetname = workbook.SheetNames[0];
-        console.log(`${sheetname} found`);
-        const idSheet = workbook.Sheets[sheetname];
-        const data = XLSX.utils.sheet_to_json(idSheet, {header : 1})
-        let parsedIdList = parseIdDataFromJson(data);
-        // if the result is not null, undefined or empty, then make it the global master list
-        if(parsedIdList === null || parsedIdList === undefined || parsedIdList.length == 0){
-            window.alert("Failed to load sinners from XLSX file");
-        }
-        else{
-            idMasterList.splice(0, idMasterList.length);
-            parsedIdList.forEach(id => {
-                idMasterList.push(id);
-            });
-        }
+    reader.onload = async (e) => {
+    const arrayBuffer = e.target.result;
+    const workbook = XLSX.read(arrayBuffer);
+    const sheetname = workbook.SheetNames[0];
+    console.log(`${sheetname} found`);
+    const idSheet = workbook.Sheets[sheetname];
+    const data = XLSX.utils.sheet_to_json(idSheet, {header : 1})
+    let parsedIdList = await parseIdDataFromJson(data);
+    // if the result is not null, undefined or empty, then make it the global master list
+    if(parsedIdList === null || parsedIdList === undefined || parsedIdList.length == 0){
+        window.alert("Failed to load sinners from XLSX file");
+    }
+    else{
+        idMasterList.splice(0, idMasterList.length);
+        parsedIdList.forEach(id => {
+            idMasterList.push(id);
+        });
+        localStorage.setItem("masterList", idMasterList);
+    }
     }
     reader.readAsArrayBuffer(file);
 }
@@ -72,11 +78,6 @@ function getColumnIndices(headerRow){
     return colIdxMap;
 }
 
-function splitCommaSeperatedValue(strValue){
-    
-    return (strValue) ? Papa.parse(strValue).data[0] : [];
-}
-
 function parseIdDataFromJson(data){
     let newMasterList = [];
     const headerRow = data[0];
@@ -88,11 +89,12 @@ function parseIdDataFromJson(data){
     for (let rowNum = 1; rowNum < data.length; rowNum++){
         try{
             const row = data[rowNum];
-            const sinner = Sinners.getSinnerFromIdNumber(row[colIdxMap.get(ColumnNames.Sinner)]);
+            const sinner = Sinners.All[row[colIdxMap.get(ColumnNames.Sinner)] - 1];
+            //console.log(sinner.toString());
             const name = row[colIdxMap.get(ColumnNames.IdName)];
             const stars = parseInt(row[colIdxMap.get(ColumnNames.Stars)]);
-            const statuses = splitCommaSeperatedValue(row[colIdxMap.get(ColumnNames.Statuses)]);
-            const factions = splitCommaSeperatedValue(row[colIdxMap.get(ColumnNames.Factions)]);
+            const statuses = splitCommaSeperatedValue(row[colIdxMap.get(ColumnNames.Statuses)], true);
+            const factions = splitCommaSeperatedValue(row[colIdxMap.get(ColumnNames.Factions)], true);
             const season = parseInt(row[colIdxMap.get(ColumnNames.Season)]);
             const level = parseInt(row[colIdxMap.get(ColumnNames.Level)]);
             const difficulty = parseInt(row[colIdxMap.get(ColumnNames.Difficulty)]);
@@ -116,5 +118,6 @@ function parseIdDataFromJson(data){
             continue;
         }
     }
+    console.log(`${newMasterList.length} found`);
     return newMasterList;
 }

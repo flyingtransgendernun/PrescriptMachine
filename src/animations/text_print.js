@@ -29,12 +29,12 @@ class AbstractAnimatedTextPrinter extends AbstractTextPrinter{
     }
 
     async print(){
-        console.log(`Trying to print ${this.text}`);
+        //console.log(`Trying to print ${this.text}`);
         this.element.innerHTML = "";
         let i = 0;
         let interval = setInterval(() => {
             if (i < this.characters.length) {
-                console.log(`Interval ${i}`);
+                //console.log(`Interval ${i}`);
                 this.onInterval(i);
                 i++;
             } else {

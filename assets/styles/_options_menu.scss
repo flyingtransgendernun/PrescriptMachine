@@ -1,0 +1,47 @@
+@use "./palette";
+@use "./fonts";
+@use "sass:color";
+
+.options-menu{
+    background: #0a0601;
+    background-repeat:repeat-y;
+    background: linear-gradient(0deg, rgba(10, 6, 1, 1) 0%, rgba(54, 41, 35, 1) 20%, rgba(77, 56, 44, 1) 50%, rgba(46, 26, 20, 1) 72%, rgba(26, 16, 6, 1) 99%, rgba(174, 185, 189, 1) 100%);
+    border-color: palette.$options-border;
+    margin-left: 16px;  
+
+    h2{
+        color: palette.$gold-text; 
+    }
+
+    input, button, label{ 
+        width: 95%;
+        margin: 0 8px;
+    }
+
+    input{
+        color: palette.$gold-text;
+    }
+
+    input:hover, button:hover{
+        background-color: color.mix(palette.$options-bg, white, 96%);
+    }
+
+    button{
+        font-family: fonts.$mikodacs;
+        padding: 12px;
+        font-size: 24px;
+        background-color: transparent;
+        color: palette.$text-colour;
+        border-color: palette.$text-colour;
+        border-radius: 8px;
+        border-width: 4px;
+        border-style:outset;
+        margin-top: 16px;
+        margin-left: 4px;
+    }
+
+    label{
+        margin: 4px 4px 4px 8px;
+    }
+}
+

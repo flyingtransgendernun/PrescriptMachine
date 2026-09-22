@@ -1,0 +1,44 @@
+@use "./fonts";
+@use "./palette";
+@use "sass:color";
+
+$box-size: 44px;
+
+#team-output{
+    @media (max-width: 600px) {
+        margin-left: 15%;
+    }
+}
+
+.prescript-machine{
+    border-color: aliceblue;
+    border-style: outset;
+    border-width: 6px;
+}
+
+.selected{
+    border-color: palette.$gold-text;
+    background-color: color.mix(palette.$gold-text, black, 18%) !important;
+}
+
+.backup{
+    border-color: palette.$backup;
+    background-color: color.mix(palette.$backup, black, 18%) !important;
+}
+
+.id-icon{
+    width: $box-size;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.id-output-row{
+    background-color: black;
+    font-family: fonts.$perfect-dos;
+    color: palette.$prescript-machine-text;
+    height: $box-size;
+    font-size: 16px;
+    padding: 6px;
+    margin-bottom: 8px;
+}
+

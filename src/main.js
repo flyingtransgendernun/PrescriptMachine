@@ -1,19 +1,65 @@
-import * as TextPrinter from "./animations/text_print.js";
-import { idMasterList } from "./randomiser/id_list.js";
-import { Sinners } from "./id_definitions/sinners.js";
+import { idMasterList } from "./id_definitions/id_list.js";
+import { SinnerId } from "./id_definitions/sinner_id.js";
 
+const randomTeamBtn = document.getElementById("random-team");
+const randomStsTeamBtn = document.getElementById("random-status-team");
+const randomFacTeamBtn = document.getElementById("random-faction-team");
+const randomDeploy = document.getElementById("random-deployment-order");
+const keywordFilterBox = document.getElementById("keywords-filter");
+let team = null;
 
-const testOutput = document.getElementById("print-master-list");
-testOutput.onclick = function() { 
-    displayTeamPrescript();
+randomTeamBtn.onclick = function() { 
+    if(idMasterList == null || idMasterList == undefined || idMasterList.length < 1){
+        window.alert("Please load a spreadsheet with ID data");
+        return;
+    }
+    const keywordsToFilter = getKeywords();
+    let s = idMasterList[0];
+    team = idMasterList.getRandomTeam(keywordsToFilter);
+    team.displayTeamPrescript("team-output");
 };
 
-function displayTeamPrescript(){
-    const ids  = idMasterList.filter(id => id.sinner === Sinners.Ryoshu || id.factions.includes(["LCB", "Fixer"]));
-    ids.print();
-    let printer = new TextPrinter.UnscramblePrinter("text-animation-test-1", ids.getRandom().getName());
-    printer.print();
-    printer = new TextPrinter.UnscramblePrinter("text-animation-test-2", ids.getRandom().getName());
-    printer.print();
+randomStsTeamBtn.onclick = function() { 
+    if(idMasterList == null || idMasterList == undefined || idMasterList.length < 1){
+        window.alert("Please load a spreadsheet with ID data");
+        return;
+    }
+    team = idMasterList.getRandomStatusTeam();
+    team.displayTeamPrescript("team-output");
+};
+
+randomFacTeamBtn.onclick = function() { 
+    if(idMasterList == null || idMasterList == undefined || idMasterList.length < 1){
+        window.alert("Please load a spreadsheet with ID data");
+        return;
+    }
+    team = idMasterList.getRandomFactionTeam();
+    team.displayTeamPrescript("team-output");
+};
+
+randomDeploy.onclick = function() { 
+    if(team == null || team.length != 12){
+        window.alert("There is not a full team to select the order for");
+    }
+    team.setRandomDeploymentOrder("team-output");
+};
+
+function getKeywords(){
+    const keywordArray = splitCommaSeperatedValue(keywordFilterBox.value, true);
+    console.log(keywordArray);
+    return keywordArray;
 }
 
+export function splitCommaSeperatedValue(strValue, forceLower = false){
+    const out = (strValue) ? Papa.parse(strValue).data[0] : [];
+    if(forceLower){
+        let loweredOut = [];
+        out.forEach(element => {
+            loweredOut.push(element.toLowerCase())
+        });
+        return loweredOut;
+    }
+    else{
+        return out;
+    }
+}

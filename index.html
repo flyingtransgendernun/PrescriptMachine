@@ -1,36 +1,64 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
+        <title>Prescript Machine - Limbus Company Team Generator</title>
+        <meta name="description" content="Limbus Company Random ID Team Generator">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" href="assets/styles/main.css">
     </head>
     <body>
-        <p id="text-animation-test-1" class="prescript-machine id-output-row"></p>
-        <p id="text-animation-test-2" class="prescript-machine id-output-row"></p>
-        <input type="file" id="spreadsheet-upload"/>
-        <button type="button" id="print-master-list">Print Random ID</button>
-        <div class="prescript-machine">
-            <ul id="master-list-test-output"></ul>
+        <div class="container">
+            <h1>Prescript Machine - Random Team Generator</h1>
+            <div class="row align-items-start">
+                <div class="col-md-6 col-sm-12">  
+                    <div id="team-output"></div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="options-menu prescript-machine">
+                        <h2>How To Use</h2>
+                        <ol>
+                            <li>Download the full ID spreadsheet <a href="https://docs.google.com/spreadsheets/d/1RdyUjkhYTvMPGO3bJKkDpQvuia-lx3t7OZ_IB3DIs2o/edit?usp=drive_link">here</a></li>
+                            <li>Open the spreadsheet in an editor and remove the sinners that you don't have/don't want to use.</li>
+                            <li>Open the spreadsheet file on this site.</li>
+                            <li>Type in the keywords you want the random selection to filter for (seperated by a comma).</li>
+                        </ol>
+                        <div class="col">
+                            <div class="row align-items-start">
+                                <input type="file" id="spreadsheet-upload"/>
+                                <div class="col-12">
+                                    <label for="keywords-filter">Keywords To Include</label>
+                                    <input type="text" id="keywords-filter" class="options-menu prescript-machine"> 
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <button type="button" id="random-team">Random Team</button>
+                                    <button type="button" id="random-status-team">Random Status Team</button>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <button type="button" id="random-deployment-order">Random Order</button>
+                                    <button type="button" id="random-faction-team">Random Faction Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <script src="\lib\papaparse.js"></script>
-        <script type="module" src="\lib\random.js"></script>
         
-        <script type="module" src="\src\id_definitions\sinner_id.js"></script>
-        <script type="module" src="\src\id_definitions\sinners.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <script type="module" src=".\src\id_definitions\id_list.js"></script>
+        <script src=".\lib\papaparse.js"></script>
+        <script type="module" src=".\lib\random.js"></script>
+        <script type="module" src=".\src\animations\text_print.js"></script>
+ 
+        <script type="module" src=".\src\id_definitions\sinner_id.js"></script>
+        <script type="module" src=".\src\id_definitions\sinners.js"></script>
+        <script type="module" src=".\src\id_definitions\spreadsheet_to_sinner_list.js"></script>
+        <script type="module" src=".\src\id_definitions\team.js"></script>
 
-        <script type="module" src="\src\randomiser\id_list.js"></script>
-        <script type="module" src="\src\randomiser\spreadsheet_to_sinner_list.js"></script>
-        <script type="module" src="\src\animations\text_print.js"></script>
-
-        <script type="module" src="\src\main.js"></script>
+        <script type="module" src=".\src\main.js"></script>
     </body>
 </html>

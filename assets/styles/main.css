@@ -1,37 +1,125 @@
 @font-face {
-  font-family: "Liberation Mono";
-  src: url(../fonts/LiberationMono-Regular.ttf);
+  font-family: "Perfect Dos";
+  src: url(../fonts/Perfect\ DOS\ VGA\ 437.ttf);
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: "Liberation Mono";
-  src: url(../fonts/LiberationMono-Italic.ttf);
+  font-family: "Mikodacs";
+  src: url(../fonts/Mikodacs.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Liberation Sans";
+  src: url(../fonts/LiberationSans-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Liberation Sans";
+  src: url(../fonts/LiberationSans-Italic.ttf);
   font-style: italic;
 }
 @font-face {
-  font-family: "Liberation Mono";
-  src: url(../fonts/LiberationMono-Bold.ttf);
+  font-family: "Liberation Sans";
+  src: url(../fonts/LiberationSans-Bold.ttf);
   font-weight: bold;
 }
 @font-face {
-  font-family: "Liberation Mono";
-  src: url(../fonts/LiberationMono-BoldItalic.ttf);
+  font-family: "Liberation Sans";
+  src: url(../fonts/LiberationSans-BoldItalic.ttf);
   font-weight: bold;
   font-style: italic;
 }
+@media (max-width: 600px) {
+  #team-output {
+    margin-left: 15%;
+  }
+}
+
 .prescript-machine {
-  background-color: black;
-  color: deepskyblue;
-  font-family: "Liberation Mono";
+  border-color: aliceblue;
+  border-style: outset;
+  border-width: 6px;
 }
-.prescript-machine li {
-  padding: 2px;
+
+.selected {
+  border-color: rgb(234, 193, 7);
+  background-color: rgb(42.12, 34.74, 1.26) !important;
+}
+
+.backup {
+  border-color: rgb(0, 173, 161);
+  background-color: rgb(0, 31.14, 28.98) !important;
+}
+
+.id-icon {
+  width: 44px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .id-output-row {
-  min-height: 20px;
-  padding: 5px;
+  background-color: black;
+  font-family: "Perfect Dos";
+  color: rgb(73, 170, 255);
+  height: 44px;
+  font-size: 16px;
+  padding: 6px;
+  margin-bottom: 8px;
+}
+
+.options-menu {
+  background: #0a0601;
+  background-repeat: repeat-y;
+  background: linear-gradient(0deg, rgb(10, 6, 1) 0%, rgb(54, 41, 35) 20%, rgb(77, 56, 44) 50%, rgb(46, 26, 20) 72%, rgb(26, 16, 6) 99%, rgb(174, 185, 189) 100%);
+  border-color: rgb(100, 77, 66);
+  margin-left: 16px;
+}
+.options-menu h2 {
+  color: rgb(234, 193, 7);
+}
+.options-menu input, .options-menu button, .options-menu label {
+  width: 95%;
+  margin: 0 8px;
+}
+.options-menu input {
+  color: rgb(234, 193, 7);
+}
+.options-menu input:hover, .options-menu button:hover {
+  background-color: rgb(52.44, 31.32, 20.76);
+}
+.options-menu button {
+  font-family: "Mikodacs";
+  padding: 12px;
+  font-size: 24px;
+  background-color: transparent;
+  color: rgb(245, 230, 210);
+  border-color: rgb(245, 230, 210);
+  border-radius: 8px;
+  border-width: 4px;
+  border-style: outset;
+  margin-top: 16px;
+  margin-left: 4px;
+}
+.options-menu label {
+  margin: 4px 4px 4px 8px;
+}
+
+body {
+  background-color: rgb(19, 7, 1);
+  color: rgb(245, 230, 210);
+  font-family: "Liberation Sans";
+  margin-top: 4px;
+  width: 100%;
+}
+
+h1, h2 {
+  font-family: "Mikodacs";
+  letter-spacing: 1px;
+  padding: 8px 12px 0px;
+  margin-top: 8px;
 }
 
 /*# sourceMappingURL=main.css.map */
