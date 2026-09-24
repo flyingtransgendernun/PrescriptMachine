@@ -1,5 +1,4 @@
 import { idMasterList } from "./id_definitions/id_list.js";
-import { SinnerId } from "./id_definitions/sinner_id.js";
 
 const randomTeamBtn = document.getElementById("random-team");
 const randomStsTeamBtn = document.getElementById("random-status-team");
@@ -46,7 +45,6 @@ randomDeploy.onclick = function() {
 
 function getKeywords(){
     const keywordArray = splitCommaSeperatedValue(keywordFilterBox.value, true);
-    console.log(keywordArray);
     return keywordArray;
 }
 

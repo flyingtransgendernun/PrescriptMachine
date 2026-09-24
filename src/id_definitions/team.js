@@ -1,8 +1,6 @@
-import { SinnerId } from "./sinner_id.js";
-import { Sinners } from "./sinners.js";
-import { IdList } from "./id_list.js";
 import * as Random from "../../lib/random.js";
 import * as TextPrinter from "../animations/text_print.js";
+import {Sinners} from "./sinners.js";
 
 export class Team extends Array{
 
@@ -57,5 +55,28 @@ export class Team extends Array{
             p.innerHTML = `<span style="color: white">${idOrder}.</span> ${idToPrint.getName()}`;
             i++;
         }
+    }
+
+    toBinary(){
+        let out = 0;
+        const foundSinners = this.map(id => id.sinner);
+        Sinners.All.forEach(s => {
+            if(foundSinners.includes(s)){
+                out += 2 ** (s.id - 1);
+            }
+        } );
+        return out;
+    }
+
+    combineTeams(newTeam){
+        const thisSinners = this.map(id => id.sinner);
+        newTeam.forEach(id =>{
+            if(!thisSinners.includes(id.sinner)){
+                this.push(id);
+            }
+        })
+        const out = this.sort((a, b) => a.sinner.id - b.sinner.id);
+        console.log(out);
+        return out;
     }
 }

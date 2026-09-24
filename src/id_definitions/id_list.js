@@ -7,7 +7,7 @@ export class IdList extends Array{
 
     // return a list of all ids that match the predicatez
     filter(predicate){
-        console.log(predicate);
+        //console.log(predicate);
         let out = new IdList();
         this.forEach(id => {
             if(predicate(id)){
@@ -64,13 +64,13 @@ export class IdList extends Array{
             const sinner = Sinners.All[i];
             const sinnersIds = filteredIdList.getIdsForSinner(sinner);
             if(sinnersIds.length < 1){
-                console.log(`Couldn't find an ID for ${sinner.name}`);
+                //console.log(`Couldn't find an ID for ${sinner.name}`);
                 continue;
             }
-            console.log(sinnersIds);
+            //console.log(sinnersIds);
             const newId = sinnersIds.getRandom();
             newTeam.push(newId);
-            console.log(newId);
+            //console.log(newId);
         }
         return newTeam;
     }
@@ -80,22 +80,91 @@ export class IdList extends Array{
         this.forEach(id => {
             id.statuses.forEach(s => statuses.add(s));
         })
-        return this.createRandomTeamFromKeywordSet(statuses);
+        const keywords = Array.from(set);
+        const randKw = keywords[random.randomInt(keywords.length)];
+        return this.getRandomTeam([randKw]);
     }
 
-    getRandomFactionTeam(){
+    getAllUnqiueFactions(){
         const factions = new Set()
         this.forEach(id => {
             id.factions.forEach(f => factions.add(f));
         })
-        return this.createRandomTeamFromKeywordSet(factions);
+        return Array.from(factions);
     }
 
-    createRandomTeamFromKeywordSet(set){
-        const keywords = Array.from(set);
-        const randKw = keywords[random.randomInt(keywords.length)];
-        console.log(`Creating ${randKw} team`);
-        return this.getRandomTeam([randKw]);
+    getRandomFactionTeam(){
+        const uniqueFactionArray = this.getAllUnqiueFactions();
+        // choose a random one
+        const randomFaction = uniqueFactionArray[random.randomInt(uniqueFactionArray.length)];
+
+        console.log(randomFaction);
+        
+        const team = this.getRandomTeam([randomFaction]);
+        
+        const filledTeam = this.fillOutTeam(team);
+
+        return filledTeam;
+    }
+
+    fillOutTeam(team){
+        if(team.length > 12){
+            // i implemented it wrong
+            throw new Error("Team is too big");
+        }
+        else if(team.length == 12){
+            // team is already the right size
+            return team;
+        }
+
+        else if(team.length > 9){
+            return this.fillTeamWithRandomIds(team);
+        }
+        else{
+            return this.fillOutTeam(this.fillTeamWithMoreFactions(team));
+        }
+    }
+
+    fillTeamWithMoreFactions(team){
+        const binaryDigits = Sinners.All.length;
+        const teamBinary = team.toBinary();
+        const uniqueFactionArray = this.getAllUnqiueFactions();
+        const gapFillers = uniqueFactionArray.map(f => {
+            let faction = this.getRandomTeam([f]);
+            let fills = faction.toBinary() ^ teamBinary;
+            let total = 0;
+            let i = 0;
+            while(i++ <= binaryDigits){
+                const mask = 1 << i;
+                if((mask & fills) == (mask)){
+                    total++;
+                }
+            }
+            return [total, f];
+        }).sort((a, b) => a[0] < b[0]).slice(
+            Math.floor(uniqueFactionArray.length * 0.05),
+            Math.floor(uniqueFactionArray.length * 0.3) 
+        );
+
+        const newTeamKw = gapFillers[random.randomInt(gapFillers.length)][1];
+        console.log(newTeamKw);
+        const teamToAppend = this.getRandomTeam([newTeamKw]);
+        console.log(team.combineTeams(teamToAppend));
+        return team.combineTeams(teamToAppend);
+    }
+
+    fillTeamWithRandomIds(team){
+        const includedSinners = new Set();
+        team.forEach(id => {
+            includedSinners.add(id.sinner);
+        });
+        Sinners.All.forEach(s =>{
+            if(!(includedSinners.has(s) || s === Sinners.Dante)){
+                const ids = this.getIdsForSinner(s);   
+                team.push(ids.getRandom());
+            }
+        });
+        return team.sort();
     }
 }
 

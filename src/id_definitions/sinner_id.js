@@ -29,8 +29,6 @@ export class SinnerId{
                 })
             });
         }
-
-        console.log(result);
         return result;
     }
 
